@@ -16,7 +16,7 @@ import maya.mel as mel
 
 
 MAYA_VERSION = int(cmds.about(version=True))
-MODULE_NAME = os.path.dirname(__file__).rsplit('/', 1)[-1]
+MODULE_NAME = 'takRenamer'
 MODULE_VERSION = '1.0'
 MODULE_PATH = os.path.dirname(__file__) + '/Contents'
 
