@@ -1,9 +1,10 @@
-import imp
+from imp import reload
+
 import pymel.core as pm
 
-from . import takRenamer as tr
-from . import gui
-imp.reload(tr)
+from . import takRenamer as tr; reload(tr)
+from . import gui; reload(gui)
+
 
 def showUI():
     gui.TakRenamerDialog.delInstance()

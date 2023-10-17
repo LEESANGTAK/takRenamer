@@ -70,7 +70,16 @@ class TakRenamerDialog(QtWidgets.QDialog):
 
     def loadSelections(self):
         sels = pm.selected()
+
         self._takRenamer.longOrigNames = sels
+        self.addPrefix()
+        self.addSuffix()
+        self.setHashName()
+        self.setHashStartNum()
+        self.setEndSuffix()
+        self.clearEndInts(self._ui.clearEndIntsChkbox.isChecked())
+        self.searchReplace()
+
         self._takRenamer.updateNames()
         self.refreshNamesTable()
 
@@ -139,7 +148,7 @@ class TakRenamerDialog(QtWidgets.QDialog):
         self.setFocus()
         self._takRenamer.apply()
         self._takRenamer.reset()
-        self.clear()
+        # self.clear()
         self.refreshNamesTable()
 
     def clear(self):
