@@ -187,7 +187,9 @@ class TakRenamer(object):
     def setEndSuffix(self):
         for i in range(len(self._niceOrigNames)):
             if not pm.listRelatives(self._longOrigNames[i], ad=True):
-                self._newNames[i] = re.sub(r'(.+\D+)\d+$', r'\1{0}'.format(self._endSuffix), self._newNames[i])
+                searchObj = re.search(r'.+\D+(\d+)', self._newNames[i])
+                if searchObj:
+                    self._newNames[i] = self._newNames[i].replace(searchObj.group(1), self._endSuffix)
 
     def apply(self):
         pm.undoInfo(openChunk=True)
