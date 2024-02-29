@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>369</width>
+    <width>404</width>
     <height>570</height>
    </rect>
   </property>
@@ -172,7 +172,7 @@
         <string># End Suffix</string>
        </property>
        <property name="checked">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="tristate">
         <bool>false</bool>

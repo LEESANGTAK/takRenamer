@@ -14,12 +14,12 @@ class TakRenamer(object):
         self._suffix = None
         self._searchStr = None
         self._replaceStr = None
-        self._setEndSuffixFlag = False
+        self._setEndSuffixFlag = True
         self._clearEndIntsFlag = False
         self._hashStartNum = None
         self._endSuffix = None
 
-        self.updateNames()
+        # self.updateNames()
 
     @property
     def longOrigNames(self):
@@ -185,11 +185,16 @@ class TakRenamer(object):
             self._newNames[i] = re.sub(r'(.+\D+)\d+$', r'\1', self._newNames[i])
 
     def setEndSuffix(self):
-        for i in range(len(self._niceOrigNames)):
-            if not pm.listRelatives(self._longOrigNames[i], ad=True):
-                searchObj = re.search(r'.+\D+(\d+)', self._newNames[i])
-                if searchObj:
-                    self._newNames[i] = self._newNames[i].replace(searchObj.group(1), self._endSuffix)
+        if self._newNames:
+            searchObj = re.search(r'.+\D+(\d+)', self._newNames[-1])
+            if searchObj:
+                self._newNames[-1] = self._newNames[-1].replace(searchObj.group(1), self._endSuffix)
+
+        # for i in range(len(self._niceOrigNames)):
+        #     if not pm.listRelatives(self._longOrigNames[i], ad=True):
+        #         searchObj = re.search(r'.+\D+(\d+)', self._newNames[i])
+        #         if searchObj:
+        #             self._newNames[i] = self._newNames[i].replace(searchObj.group(1), self._endSuffix)
 
     def apply(self):
         pm.undoInfo(openChunk=True)

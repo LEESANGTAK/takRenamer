@@ -1,5 +1,4 @@
 import os
-from re import search
 
 from PySide2 import QtUiTools, QtCore, QtWidgets
 from shiboken2 import wrapInstance
