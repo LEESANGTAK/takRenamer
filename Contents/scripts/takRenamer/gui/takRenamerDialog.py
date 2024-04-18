@@ -46,12 +46,13 @@ class TakRenamerDialog(QtWidgets.QDialog):
 
     def createConnections(self):
         self._ui.namesTableWidget.customContextMenuRequested.connect(self.showPopupMenu)
-        self._ui.newNameLineEdit.editingFinished.connect(self.setHashName)
-        self._ui.prefixLineEdit.editingFinished.connect(self.addPrefix)
-        self._ui.suffixLineEdit.editingFinished.connect(self.addSuffix)
-        self._ui.replaceLineEdit.editingFinished.connect(self.searchReplace)
+        self._ui.newNameLineEdit.textChanged.connect(self.setHashName)
+        self._ui.prefixLineEdit.textChanged.connect(self.addPrefix)
+        self._ui.suffixLineEdit.textChanged.connect(self.addSuffix)
+        self._ui.searchLineEdit.textChanged.connect(self.searchReplace)
+        self._ui.replaceLineEdit.textChanged.connect(self.searchReplace)
         self._ui.startNumSpinbox.valueChanged.connect(self.setHashStartNum)
-        self._ui.endSuffixLineEdit.editingFinished.connect(self.setEndSuffix)
+        self._ui.endSuffixLineEdit.textChanged.connect(self.setEndSuffix)
         self._ui.setEndSuffixChkbox.stateChanged.connect(self.setEndSuffixOption)
         self._ui.clearEndIntsChkbox.stateChanged.connect(self.clearEndInts)
         self._ui.applyButton.clicked.connect(self.apply)
