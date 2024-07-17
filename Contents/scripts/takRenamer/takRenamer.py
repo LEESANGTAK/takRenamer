@@ -143,7 +143,7 @@ class TakRenamer(object):
             paddingCount = len(searchResultDollar.group(2))
             backwardStr = searchResultDollar.group(3)
         else:
-            pm.warning('Given name has no "#" or "$" character.')
+            # pm.warning('Given name has no "#" or "$" character.')
             return
 
         if searchResultHash:
