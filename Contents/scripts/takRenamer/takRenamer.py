@@ -14,7 +14,7 @@ class TakRenamer(object):
         self._suffix = None
         self._searchStr = None
         self._replaceStr = None
-        self._setEndSuffixFlag = True
+        self._setEndSuffixFlag = False
         self._clearEndIntsFlag = False
         self._hashStartNum = None
         self._endSuffix = None
