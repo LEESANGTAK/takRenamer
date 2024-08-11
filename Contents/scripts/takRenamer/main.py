@@ -4,6 +4,10 @@ import pymel.core as pm
 
 from . import takRenamer as tr; reload(tr)
 from . import gui; reload(gui)
+from . import utils; reload(utils)
+
+
+utils.checkVersion()
 
 
 def showUI():
