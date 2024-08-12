@@ -31,7 +31,7 @@ def isOutdated(repo_path):
 
     try:
         # Fetch the latest commits from the remote repository
-        subprocess.run(["git", "fetch"], check=True, creationflags=CREATE_NO_WINDOW)
+        subprocess.call(["git", "fetch"], creationflags=CREATE_NO_WINDOW)
 
         # Get the local and remote HEAD commit hashes
         local_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], creationflags=CREATE_NO_WINDOW).strip()
@@ -51,7 +51,7 @@ def isOutdated(repo_path):
 def update():
     try:
         # Pull the latest changes from the remote repository
-        subprocess.run(["git", "pull"], check=True, creationflags=CREATE_NO_WINDOW)
+        subprocess.call(["git", "pull"], creationflags=CREATE_NO_WINDOW)
         print("Update is done successfully.")
     except subprocess.CalledProcessError as e:
         print("Failed to update: {}".format(e))
