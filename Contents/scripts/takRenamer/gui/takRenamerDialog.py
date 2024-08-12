@@ -1,10 +1,13 @@
 import os
 
-from PySide2 import QtUiTools, QtCore, QtWidgets
+from PySide2 import QtUiTools, QtCore, QtWidgets, QtGui
 from shiboken2 import wrapInstance
 
 import maya.OpenMayaUI as omui
 import pymel.core as pm
+
+from imp import reload
+from .. import utils;reload(utils)
 
 
 def getMayaMainWindow():
@@ -28,12 +31,20 @@ class TakRenamerDialog(QtWidgets.QDialog):
         self._ui = None
         self._takRenamer = takRenamer
 
+        self.setWindowTitle('takRenamer')
+        self.setWindowIcon(QtGui.QIcon(':QR_rename.png'))
+        self.setMinimumHeight(500)
+
         self.createWidgets()
         self.createLayouts()
         self.createConnections()
-        self.setDefaultState()
 
     def createWidgets(self):
+        self._menuBar = QtWidgets.QMenuBar(self)
+        self._helpMenu = self._menuBar.addMenu('Help')
+        self._checkUpdateAction = QtWidgets.QAction('Check Update')
+        self._helpMenu.addAction(self._checkUpdateAction)
+
         loader = QtUiTools.QUiLoader()
         self._ui = loader.load(os.path.join(TakRenamerDialog.UI_FILES_PATH, 'main.ui'), parentWidget=None)
 
@@ -41,10 +52,11 @@ class TakRenamerDialog(QtWidgets.QDialog):
 
     def createLayouts(self):
         mainLayout = QtWidgets.QVBoxLayout(self)
-        mainLayout.setMargin(0)
+        mainLayout.setContentsMargins(0, 30, 0, 0)
         mainLayout.addWidget(self._ui)
 
     def createConnections(self):
+        self._checkUpdateAction.triggered.connect(utils.checkVersion)
         self._ui.namesTableWidget.customContextMenuRequested.connect(self.showPopupMenu)
         self._ui.newNameLineEdit.textChanged.connect(self.setHashName)
         self._ui.prefixLineEdit.textChanged.connect(self.addPrefix)
@@ -58,15 +70,10 @@ class TakRenamerDialog(QtWidgets.QDialog):
         self._ui.applyButton.clicked.connect(self.apply)
         self._ui.cancelButton.clicked.connect(self.close)
 
-    def setDefaultState(self):
-        self.setWindowTitle('Tak Renamer')
-        self.setWindowFlags(QtCore.Qt.Tool)
-        self.setMinimumHeight(500)
-
     def showPopupMenu(self, pos):
         menu = QtWidgets.QMenu(self)
         menu.addAction('Load Selections', self.loadSelections)
-        menu.exec_(self.mapToGlobal(pos))
+        menu.exec_(self._ui.namesTableWidget.mapToGlobal(pos))
 
     def loadSelections(self):
         sels = pm.selected()

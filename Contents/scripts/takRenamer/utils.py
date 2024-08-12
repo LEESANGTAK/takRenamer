@@ -21,6 +21,8 @@ def checkVersion():
 
         if 'Yes' == result:
             update()
+    else:
+        cmds.confirmDialog(title=MODULE_NAME, message='You have latest version.\nEnjoy!')
 
 
 def isOutdated(repo_path):
