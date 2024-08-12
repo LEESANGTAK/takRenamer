@@ -7,7 +7,7 @@ import maya.OpenMayaUI as omui
 import pymel.core as pm
 
 from imp import reload
-from .. import utils;reload(utils)
+from .. import utils; reload(utils)
 
 
 def getMayaMainWindow():

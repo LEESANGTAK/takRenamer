@@ -42,7 +42,7 @@ def isOutdated(repo_path):
             return True  # Local repo is outdated
 
     except subprocess.CalledProcessError as e:
-        print(f"Error: {e}")
+        print("Error: {}".format(e))
         return False
 
     return False  # Local repo is up-to-date
@@ -54,4 +54,4 @@ def update():
         subprocess.run(["git", "pull"], check=True, creationflags=CREATE_NO_WINDOW)
         print("Update is done successfully.")
     except subprocess.CalledProcessError as e:
-        print(f"Failed to update: {e}")
+        print("Failed to update: {}".format(e))
