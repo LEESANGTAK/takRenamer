@@ -91,10 +91,13 @@
         </size>
        </property>
        <property name="toolTip">
-        <string># will replace with number and $ will replace with character</string>
+        <string># will be numbers and $ will be alphabets</string>
+       </property>
+       <property name="text">
+        <string/>
        </property>
        <property name="placeholderText">
-        <string>Hash New Name</string>
+        <string>Padding</string>
        </property>
       </widget>
      </item>
@@ -130,7 +133,7 @@
      <item>
       <widget class="QSpinBox" name="startNumSpinbox">
        <property name="value">
-        <number>1</number>
+        <number>0</number>
        </property>
       </widget>
      </item>
@@ -172,7 +175,7 @@
         <string># End Suffix</string>
        </property>
        <property name="checked">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="tristate">
         <bool>false</bool>
