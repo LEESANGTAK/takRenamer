@@ -97,7 +97,7 @@
         <string/>
        </property>
        <property name="placeholderText">
-        <string>Padding</string>
+        <string>Padding with # or $</string>
        </property>
       </widget>
      </item>
