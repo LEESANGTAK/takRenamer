@@ -5,37 +5,20 @@ from maya import cmds
 
 MODULE_NAME = 'takRenamer'
 MODULE_PATH = __file__.split(MODULE_NAME, 1)[0] + MODULE_NAME
-CREATE_NO_WINDOW = 0x08000000
+NO_WINDOW = 0x08000000
 
 
-def checkVersion():
-    if isOutdated(MODULE_PATH):
-        result = cmds.confirmDialog(
-            title=MODULE_NAME,
-            message="New version is detected. Do you want to update?",
-            button=['Yes','No'],
-            defaultButton='Yes',
-            cancelButton='No',
-            dismissString='No'
-        )
-
-        if 'Yes' == result:
-            update()
-    else:
-        cmds.confirmDialog(title=MODULE_NAME, message='You have latest version.\nEnjoy!')
-
-
-def isOutdated(repo_path):
+def isOutdated():
     # Navigate to the specific repository
-    os.chdir(repo_path)
+    os.chdir(MODULE_PATH)
 
     try:
         # Fetch the latest commits from the remote repository
-        subprocess.call(["git", "fetch"], creationflags=CREATE_NO_WINDOW)
+        subprocess.call(["git", "fetch"], creationflags=NO_WINDOW)
 
         # Get the local and remote HEAD commit hashes
-        local_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], creationflags=CREATE_NO_WINDOW).strip()
-        remote_commit = subprocess.check_output(["git", "rev-parse", "@{u}"], creationflags=CREATE_NO_WINDOW).strip()
+        local_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], creationflags=NO_WINDOW).strip()
+        remote_commit = subprocess.check_output(["git", "rev-parse", "@{u}"], creationflags=NO_WINDOW).strip()
 
         # Compare the local and remote commits
         if local_commit != remote_commit:
@@ -51,7 +34,9 @@ def isOutdated(repo_path):
 def update():
     try:
         # Pull the latest changes from the remote repository
-        subprocess.call(["git", "pull"], creationflags=CREATE_NO_WINDOW)
+        subprocess.call(["git", "pull"], creationflags=NO_WINDOW)
         print("Update is done successfully.")
+        return True
     except subprocess.CalledProcessError as e:
         print("Failed to update: {}".format(e))
+        return False

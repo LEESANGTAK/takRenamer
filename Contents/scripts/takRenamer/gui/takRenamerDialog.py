@@ -16,6 +16,7 @@ def getMayaMainWindow():
 
 
 class TakRenamerDialog(QtWidgets.QDialog):
+    TOOL_NAME = 'takRenamer'
     UI_FILES_PATH = os.path.join(os.path.dirname(__file__), 'widgets')
     INSTANCE = None
 
@@ -31,7 +32,7 @@ class TakRenamerDialog(QtWidgets.QDialog):
         self._ui = None
         self._takRenamer = takRenamer
 
-        self.setWindowTitle('takRenamer')
+        self.setWindowTitle(TakRenamerDialog.TOOL_NAME)
         self.setWindowIcon(QtGui.QIcon(':QR_rename.png'))
         self.setMinimumHeight(500)
 
@@ -56,7 +57,7 @@ class TakRenamerDialog(QtWidgets.QDialog):
         mainLayout.addWidget(self._ui)
 
     def createConnections(self):
-        self._checkUpdateAction.triggered.connect(utils.checkVersion)
+        self._checkUpdateAction.triggered.connect(self.checkUpdate)
         self._ui.namesTableWidget.customContextMenuRequested.connect(self.showPopupMenu)
         self._ui.newNameLineEdit.textChanged.connect(self.setHashName)
         self._ui.prefixLineEdit.textChanged.connect(self.addPrefix)
@@ -69,6 +70,24 @@ class TakRenamerDialog(QtWidgets.QDialog):
         self._ui.clearEndIntsChkbox.stateChanged.connect(self.clearEndInts)
         self._ui.applyButton.clicked.connect(self.apply)
         self._ui.cancelButton.clicked.connect(self.close)
+
+    def checkUpdate(self):
+        if utils.isOutdated():
+            result = pm.confirmDialog(
+                title=TakRenamerDialog.TOOL_NAME,
+                message="New version is detected. Do you want to update?",
+                button=['Yes','No'],
+                defaultButton='Yes',
+                cancelButton='No',
+                dismissString='No'
+            )
+            if 'Yes' == result:
+                succeed = utils.update()
+                if succeed and TakRenamerDialog.INSTANCE:
+                    TakRenamerDialog.INSTANCE.close()
+                    TakRenamerDialog.INSTANCE.show()
+        else:
+            pm.confirmDialog(title=TakRenamerDialog.TOOL_NAME, message='You have latest version.\nEnjoy!')
 
     def showPopupMenu(self, pos):
         menu = QtWidgets.QMenu(self)
