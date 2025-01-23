@@ -43,7 +43,7 @@ class TakRenamerDialog(QtWidgets.QDialog):
     def createWidgets(self):
         self._menuBar = QtWidgets.QMenuBar(self)
         self._helpMenu = self._menuBar.addMenu('Help')
-        self._checkUpdateAction = QtWidgets.QAction('Check Update')
+        self._checkUpdateAction = QtWidgets.QAction('Check Update', self)
         self._helpMenu.addAction(self._checkUpdateAction)
 
         loader = QtUiTools.QUiLoader()
