@@ -185,7 +185,7 @@ class TakRenamer(object):
         if self._newNames:
             searchObj = re.search(r'.+\D+(\d+)', self._newNames[-1])
             if searchObj:
-                self._newNames[-1] = self._newNames[-1].replace(searchObj.group(1), self._endSuffix)
+                self._newNames[-1] = replace_from_end(self._newNames[-1], searchObj.group(1), self._endSuffix)
 
     def apply(self):
         pm.undoInfo(openChunk=True)
@@ -206,3 +206,10 @@ class TakRenamer(object):
 
 def getShortName(longName):
     return longName.split('|')[-1]
+
+
+def replace_from_end(text, old, new):
+    # Split the string into two parts, starting from the right
+    parts = text.rsplit(old, 1)
+    # If the old string is found, join with the new string
+    return new.join(parts)
